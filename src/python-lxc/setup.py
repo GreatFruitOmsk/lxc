@@ -22,7 +22,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-import os, os.path
+import os
 
 # Fix build when PIE is enabled
 for var in ("LDFLAGS", "CFLAGS"):
@@ -42,33 +42,11 @@ for var in ("LDFLAGS", "CFLAGS"):
 
 from distutils.core import setup, Extension
 
-# Distutils doesn't cope well with source files that have relative paths going
-# up in the directory tree: it tries to navigate outside of the build dir and
-# fails miserably. Therefore, we will instead cd to the source directory,
-# run this script from there, but write the build products to the correct path.
-#
-# Since we will be changing directories before building, we must transform
-# all the path variables to their forms relative to srcdir.
-
-srcdir, builddir, top_srcdir, top_builddir = map(os.path.abspath,
-    ["@srcdir@", "@builddir@", "@top_srcdir@", "@top_builddir@"])
-
-builddir, top_srcdir, top_builddir = map(lambda d: os.path.relpath(d, srcdir),
-    [builddir, top_srcdir, top_builddir])
-
-os.chdir(srcdir)
-
-module = Extension('_lxc', sources=['lxc.c'],
-                   include_dirs=[os.path.join(top_srcdir, 'src'),
-                                 os.path.join(top_builddir, 'src')],
-                   library_dirs=[os.path.join(top_builddir, 'src/lxc/.libs/')],
-                   libraries=['lxc'])
-
 
 setup(name='_lxc',
       version='0.1',
       description='LXC',
       packages=['lxc'],
       package_dir={'lxc': 'lxc'},
-      ext_modules=[module],
-      options={'build': {'build_base': os.path.join(builddir, 'build')}})
+      ext_modules=[Extension('_lxc', sources=['lxc.c'], libraries=['lxc'])],
+      )
