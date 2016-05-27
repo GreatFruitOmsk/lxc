@@ -10,7 +10,7 @@ INSTALL_OPTS := install --prefix=$(prefix) --no-compile $(DISTSETUPOPTS)
 CALL_SETUP_PY := cd @srcdir@ && $(PYTHON) setup.py build -b @abs_builddir@/build
 
 all:
-	$(CALL_SETUP_PY) build_ext -I @abs_top_srcdir@/src -L @abs_top_builddir@/src/lxc/.libs/
+	$(CALL_SETUP_PY) build_ext -I @abs_top_srcdir@/src -L @abs_top_builddir@/src/lxc/.libs/ --no-pkg-config
 
 install:
 	if [ -z "$(DESTDIR)" ]; then \
