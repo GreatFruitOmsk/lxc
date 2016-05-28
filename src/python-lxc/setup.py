@@ -43,7 +43,7 @@ for var in ("LDFLAGS", "CFLAGS"):
 from distutils.core import setup, Extension
 
 
-setup(name='_lxc',
+setup(name='lxc',
       version='0.1',
       description='LXC',
       packages=['lxc'],
