@@ -1590,7 +1590,7 @@ int __lxc_start(const char *name, struct lxc_handler *handler,
 			break;
 		case SIGHUP: /* reboot */
 			DEBUG("Container \"%s\" is rebooting.", name);
-			handler->conf->reboot = 1;
+			//handler->conf->reboot = 1;
 			break;
 		case SIGSYS: /* seccomp */
 			DEBUG("Container \"%s\" violated its seccomp policy.", name);
